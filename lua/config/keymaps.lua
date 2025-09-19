@@ -20,10 +20,12 @@ vim.keymap.set(
 vim.keymap.set(
   'n',
   '<Leader>g',
-  ':call system("xclip -i -selection clipboard", expand("%:~:."))<CR>',
+  function()
+    vim.fn.setreg('+', vim.fn.expand('%:~:.'))
+  end,
   {
     desc = 'Copy file path',
-    silent = true
+    silent = true,
   }
 )
 
@@ -36,58 +38,21 @@ vim.keymap.set(
 
 vim.keymap.set(
   'n',
-  '<C-S-Up>',
-  '<Cmd>BufferPrevious<CR>',
-  { desc = 'BufferPrevious' }
-)
-vim.keymap.set(
-  'n',
-  '<C-S-Down>',
-  '<Cmd>BufferNext<CR>',
-  { desc = 'BufferNext' }
-)
-vim.keymap.set(
-  'n',
   '<Leader>j',
-  function()
-    vim.cmd('BufferMovePrevious')
-  end,
-  { desc = 'BufferMovePrevious' }
+  ':execute "tabmove" tabpagenr() - 2<CR>',
+  { desc = 'Move tab prev' }
 )
 vim.keymap.set(
   'n',
   '<Leader>k',
-  function()
-    vim.cmd('BufferMoveNext')
-  end,
-  { desc = 'BufferMoveNext' }
+  ':execute "tabmove" tabpagenr() + 1<CR>',
+  { desc = 'Move tab next' }
 )
 
 vim.keymap.set(
   'n',
-  '<leader>qs',
-  function()
-    require('persistence').load()
-  end
+  '<C-n>',
+  ':NERDTreeToggle<CR>',
+  {desc = 'Toggle NERDTree'}
 )
-vim.keymap.set(
-  'n',
-  '<leader>qS',
-  function()
-    require('persistence').select()
-  end
-)
-vim.keymap.set(
-  'n',
-  '<leader>ql',
-  function()
-    require('persistence').load({ last = true })
-  end
-)
-vim.keymap.set(
-  'n',
-  '<leader>qd',
-  function()
-    require('persistence').stop()
-  end
-)
+
